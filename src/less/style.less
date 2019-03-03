@@ -1,0 +1,54 @@
+@pale-green-color: #4D926F;
+@background-color: darkblue;
+@color: lightcyan;
+#header {
+	color: @pale-green-color;
+}
+
+h2 {
+	color: @pale-green-color;
+}
+
+input[type=radio] {
+	margin-right: 2em;
+}
+
+.main-content {
+	overflow: auto;
+	z-index: 10;
+	height: calc(100% - 3em);
+	padding-bottom: 3em;
+}
+
+.footer {
+	z-index: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	background-color: @background-color;
+	color: @color;
+	text-align: center;
+	height: 3em;
+	clear: both;
+	margin-top: -2em;
+	position: fixed;
+}
+
+ul.user-messages {
+	border: groove;
+	border-color: blue;
+}
+
+.user-message-level-INFO {
+	border-color: blue;
+}
+
+.user-message-level-PROGRESS {
+	border-color: #4D926F;
+}
+
+.user-message-level-ERROR {
+	border-color: red;
+	color: red;
+}
+

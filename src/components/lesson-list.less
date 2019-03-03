@@ -1,0 +1,105 @@
+@lesson-list-color: white;
+@lesson-list-background-color: purple;
+
+input {
+  background-color: @lesson-list-color;
+  color: @lesson-list-background-color;
+}
+
+button.lesson-list-button {
+  background-color: @lesson-list-color;
+  color: @lesson-list-background-color;
+}
+
+.lesson-list {
+	width: 100%;
+	color: @lesson-list-color;
+	background-color: @lesson-list-background-color;
+}
+
+tbody.lesson-list {
+	height: 5em;
+	width: 90%;
+	overflow: auto;
+	padding:15px;
+}
+
+table.lesson-list {
+	height: 5em;
+	width: 100%;
+	overflow: auto;
+}
+
+div.lesson-list {
+ height:5em; 
+width: 100%;
+ overflow:auto;
+}
+
+.lesson-info-actions {
+	width: 10%;
+	text-align: center;
+	vertical-align: middle;
+}
+.lesson-info-title {
+	width: 60%;
+	text-align: center;
+	vertical-align: middle;
+}
+.lesson-info-teacher {
+	width: 20%;
+	text-align: center;
+	vertical-align: middle;
+}
+
+.lesson-info-date {
+	width: 10%;
+	text-align: center;
+	vertical-align: middle;
+}
+
+ 
+.Modal {
+	z-index: 100;
+  width: 25%;
+	height: 50%;
+	top: 40px;
+	left: 30%;
+	right: 40px;
+	bottom: 40px;
+	color: @lesson-list-color;
+	background-color: @lesson-list-background-color;
+}
+
+.ReactModal__Overlay {
+	-webkit-perspective: 600px;
+	perspective: 600px;
+	opacity: 0;
+}
+
+.ReactModal__Overlay--after-open {
+	opacity: 1;
+	transition: opacity 150ms ease-out;
+}
+
+.ReactModal__Content {
+	-webkit-transform: scale(0.5) rotateX(-30deg);
+	transform: scale(0.5) rotateX(-30deg);
+}
+
+.ReactModal__Content--after-open {
+	-webkit-transform: scale(1) rotateX(0deg);
+	transform: scale(1) rotateX(0deg);
+	transition: all 150ms ease-in;
+}
+
+.ReactModal__Overlay--before-close {
+	opacity: 0;
+}
+
+.ReactModal__Content--before-close {
+	-webkit-transform: scale(0.5) rotateX(30deg);
+	transform: scale(0.5) rotateX(30deg);
+	transition: all 150ms ease-in;
+}
+
