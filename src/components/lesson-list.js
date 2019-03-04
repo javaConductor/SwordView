@@ -1,6 +1,6 @@
 /**
  * Created by lee on 6/13/17.
- */ 
+ */
 import React from "react";
 import LessonEditorPanel from "./lesson-editor-panel";
 import Utils from "../utils/index";
@@ -28,8 +28,13 @@ let LessonListRow = (props) => {
         return (
             <tr className="lesson-info">
                 <td  className="lesson-info-actions">
-                    <button className="lesson-list-button" onClick={() => props.onOpenLesson(props.index)}><span className="glyphicon glyphicon-open"/></button>
-                    <button className="lesson-list-button" onClick={() => props.onDeleteLesson(props.index)}><span className="glyphicon glyphicon-remove"/></button>
+                    <button
+                        title="Edit Lesson"
+                        className="lesson-list-button"
+                        onClick={() => props.onOpenLesson(props.index)}>
+                         <span className="glyphicon glyphicon-open"/>
+                    </button>
+                    <button title="Remove Lesson" className="lesson-list-button" onClick={() => props.onDeleteLesson(props.index)}><span className="glyphicon glyphicon-remove"/></button>
                 </td>
                 <td className="lesson-info-title" > <span>{lesson.title}</span></td>
                 <td className="lesson-info-teacher"> {lesson.teacher} </td>
@@ -45,12 +50,12 @@ let LessonListRow = (props) => {
 //      show: () => boolean
 // />
  class NewLessonEditor extends React.Component {
-
-    getInitialState() {
-        return {
+   constructor(props) {
+     super(props);
+     this.state =   {
             newLesson: initialLesson()
-        }
-    }
+        };
+   }
 
     componentDidMount () {
         Modal.setAppElement('#view');
@@ -74,7 +79,7 @@ let LessonListRow = (props) => {
 
     render(){
         return (
-            <Modal 
+            <Modal
             className="Modal"
             isOpen={this.props.show()}
             onRequestClose={this.props.onCancel}
@@ -93,7 +98,7 @@ let LessonListRow = (props) => {
                            ref="lessonTeacher"
                            type="text"/></span>
                 <span>Date:</span>
-               
+
                 <DatePicker
 	                name="Lesson Date"
 	                placeholder={ Utils.dateFormat }
@@ -123,23 +128,27 @@ let LessonListRow = (props) => {
 // >
 //https://www.youtube.com/watch?v=szmS_M-BMls&list=PL6gx4Cwl9DGBuKtLgPR_zWYnrwv-JllpA&index=5#t=273.456242
 class LessonList extends React.Component {
-
-    getInitialState() {
-        return {
+  constructor(props) {
+    super(props);
+    this.state =  {
             isCreatingNewLesson: false,
             lessons: this.props.lessonList.lessons || []
-        }
-    }
+        };
+    this.creatingNewLesson = this.creatingNewLesson.bind(this);
+    this.onCancelNewLesson = this.onCancelNewLesson.bind(this);
+    this.onNewLesson = this.onNewLesson.bind(this);
+    this.renderLessonListRow = this.renderLessonListRow.bind(this);
+  }
 
     componentDidMount  () {
         this.props.getAllLessons();
         console.debug("lesson-list: props: "+this.props);
+        console.debug("lesson-list: state: "+this.state);
     }
 
     updateState(updatedValues){
         this.setState( updatedValues );
         console.debug("lesson-list: updateState: "+this.state);
-
     }
 
     lessonFromId( lessonId ){
@@ -169,15 +178,17 @@ class LessonList extends React.Component {
         );
     }
 
+    creatingNewLesson() {return this.state.isCreatingNewLesson;}
+
     render(){
         return (<div>
                 <div>
                 <NewLessonEditor
-                    show={() => this.state.isCreatingNewLesson}
+                    show={this.creatingNewLesson.bind(this)}
                     onSave={(lesson) => {
-                    	this.props.onSaveLesson(lesson); 
+                    	this.props.onSaveLesson(lesson);
                     	this.setState({isCreatingNewLesson: false});
-                    	}  
+                    	}
                     }
                     onCancel={this.onCancelNewLesson}
                 />
@@ -201,7 +212,7 @@ class LessonList extends React.Component {
 	                    	<td  colSpan={4}>
 	                    	<div className="lesson-list">
 			                	<table className="lesson-list">
-				                    <tbody>	                    
+				                    <tbody>
 	            			        {
 	                        			this.props.lessonList.lessons.map(this.renderLessonListRow)
 	                    			}
@@ -210,7 +221,7 @@ class LessonList extends React.Component {
 	                    	</div>
 	                    	</td>
 	                    </tr>
-                    </tbody>			                    
+                    </tbody>
                 </table>
                 <div>
                     <LessonEditorPanel/>

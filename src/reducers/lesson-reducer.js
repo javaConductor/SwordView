@@ -2,7 +2,6 @@
  * Created by lee on 6/23/17.
  */
 import C from "../constants";
-import initialState from "../model/initial-state";
 import Utils from "../utils/index";
 
 export default function (startState = {}, action) {

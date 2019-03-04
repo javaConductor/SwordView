@@ -16,7 +16,7 @@ export default function (startState={}, action) {
 
         case C.Actions.Types.REMOVE_USER_MESSAGE: {
             let messages = state.messages.filter((msg) => {
-                return msg.id !== action.payload.messageId
+                return msg.id !== action.payload.messageId;
             });
             return Object.assign({}, state, {
                 messages: messages
@@ -25,7 +25,7 @@ export default function (startState={}, action) {
 
         case C.Actions.Types.UPDATE_USER_MESSAGE: {
             let messages = state.messages.map((msg) => {
-                return msg.id !== action.payload.messageId ? msg : action.payload.message
+                return msg.id !== action.payload.messageId ? msg : action.payload.message;
             });
             return Object.assign({}, state, {
                 messages: messages
@@ -35,4 +35,4 @@ export default function (startState={}, action) {
         default:
             return state;
     }
-};
+}

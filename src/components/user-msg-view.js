@@ -15,17 +15,18 @@ let levels = ["INFO", "ERROR", "PROGRESS"];
 // <UserMessage
 //   message={
 //			id: "ABD",
-//			level:"INFO", 
-//			messageText:"Bible Search Unavailable", 
+//			level:"INFO",
+//			messageText:"Bible Search Unavailable",
 //			timestamp:"20170616050801"
 //			}
 //   onDelete= function(messageId)
 // />
  class UserMessage extends React.Component {
-    getInitialState() {
+    constructor(props) {
+        super(props);
         console.debug("user-msg-view: props: ", this.props);
-        return {}
-    }
+        this.state =  { };
+   }
 
     render(){
         return (
@@ -41,18 +42,17 @@ let levels = ["INFO", "ERROR", "PROGRESS"];
 };
 
  class UserMessageListView extends React.Component {
-    getInitialState() {
-        console.debug("user-msg-list-view: props: ", this.props);
+    constructor(props) {
+        super(props);
+         console.debug("user-msg-list-view: props: ", this.props);
         let self = this;
         pubSub.subscribe(Constants.pubSub.topics.USER_MESSAGE, (message, level) => {
             let msgs = self.state.messages;
             msgs.push({level: level, messageText: message})
             self.setState({messages: msgs})
         });
-        return {
-  //          messages: [{level: "INFO", message: "Welcome to Sword Explorer!!"}]
-        }
-    }
+        this.state = {};
+   }
 
      render() {
         let messages = this.props.userMessages.messages;

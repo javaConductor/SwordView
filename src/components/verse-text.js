@@ -1,8 +1,6 @@
 /**
  * Created by lee on 6/18/17.
  */
- 
-
 "use strict";
 /*jshint esversion: 6 */
 /* jshint node: true */
@@ -19,32 +17,36 @@ import throttle from "lodash/throttle";
 // >
  class VerseText extends React.Component {
 
-    getInitialState() {
-        let state = {
+	constructor(props){
+		super(props);
+		this.isValidVerseSpec = this.isValidVerseSpec.bind(this);
+		this.onVerseSpecChange = this.onVerseSpecChange.bind(this);
+		this.renderText=this.renderText.bind(this);
+	    this.state = {
         	validVerseSpec: this.props.verses && this.isValidVerseSpec(this.props.verses),
             lastVerseSpec: this.props.verses || "",
             verses: this.props.verses,
             verseList: [],
             readOnly: this.props.readOnly
         }
-        console.debug("verse-text: initialState: state:", state);
-        	return state;
-    }
+        console.debug("verse-text: initialState: state:", this.state);
+	}
+
     componentDidMount(){
         if (this.state.validVerseSpec)
-        	this.onVerseSpecChange( this.state.lastVerseSpec );   
+        	this.onVerseSpecChange( this.state.lastVerseSpec );
         if (this.props.verses === ""){
         	this.refs.verseSpec.focus();
         }
-        console.debug("verse-text: didMount: state: ", this.state); 	
+        console.debug("verse-text: didMount: state: ", this.state);
     }
-    
+
     renderText(){
     	let lastVerse = 0;
     	let key = 0;
         return this.state.verseList.reduce((acc, verse)=>{
-            let nodes = [];   
-                     
+            let nodes = [];
+
             if (acc.length > 0 && lastVerse !== verse.verse-1) {
                 nodes.push(<p key={key++} />);
             }
@@ -56,9 +58,9 @@ import throttle from "lodash/throttle";
                 <span key={key++} className="verse-text">{verse.verseText}</span>
             );
             return [...acc, ...nodes];// acc.concat(nodes);
-        },[]);        
+        },[]);
     }
-    
+
     isValidVerseSpec(verseSpec){
     	let re = /[\d]*[ ]*[a-zA-Z]+ [\d][:[\d]*]*/;
     	return re.exec(verseSpec);
@@ -72,7 +74,7 @@ import throttle from "lodash/throttle";
 	            	console.debug("verse-text: updateVerseSpec: onFulfilled: verseRange:", verseRange);
 	            	// verseRange={verseSpec: "Genesis 1:1", verses: []}
 		            if(!verseRange.verses || verseRange.verses.length == 0){
-	   	    			self.setState({lastVerseSpec: verseRange.verseSpec, validVerseSpec: false, verseList: [] });	            	
+	   	    			self.setState({lastVerseSpec: verseRange.verseSpec, validVerseSpec: false, verseList: [] });
 		            }else{
 		            	let verseList = verseRange.verses;
 		                self.setState( {lastVerseSpec: verseRange.verseSpec, validVerseSpec: true, verseList: verseRange.verses } );
@@ -80,26 +82,17 @@ import throttle from "lodash/throttle";
     		    	}
 
    				},
-	            
-	            function onRejected( error ) {	            
+
+	            function onRejected( error ) {
    	    			self.setState({lastVerseSpec: verseSpec, validVerseSpec: false, verseList: [] });
 	        	}
 	        );
-    
+
     	}else{
    	    	this.setState({lastVerseSpec: verseSpec, validVerseSpec: false, verseList: []});
     	}
     }
-//     onVerseSpecChange(verseSpec){	
-//     	if ( this.isValidVerseSpec(verseSpec)){
-//     		this.updateVerseSpec(verseSpec).then(() => {
-//     		if(this.state.validVerseSpec)
-//     			this.props.onVerseSpecSelected( verseSpec );
-//     		});
-//     	}else{
-//    	    	this.setState({lastVerseSpec: verseSpec, validVerseSpec: false, verseList: []});
-//     	}
-//     },
+
 
     render(){
         return (
@@ -112,15 +105,15 @@ import throttle from "lodash/throttle";
 		            		) : (
 				               	<input
 				               		disabled={this.props.readOnly}
-					               	className="verse-text-verse-spec" 
-				               		type="text" 
+					               	className="verse-text-verse-spec"
+				               		type="text"
 				               		ref={"verseSpec"}
 				               		style={{
-				               			color: (this.state.validVerseSpec ? "navy" : "red"), 
-				               			borderColor: (this.state.validVerseSpec ? "navy" : "red") 
+				               			color: (this.state.validVerseSpec ? "navy" : "red"),
+				               			borderColor: (this.state.validVerseSpec ? "navy" : "red")
 				               			}}
-				               		defaultValue={ this.state.lastVerseSpec } 
-				               		onChange={ (e) => { this.onVerseSpecChange(e.target.value) } } 
+				               		defaultValue={ this.state.lastVerseSpec }
+				               		onChange={ (e) => { this.onVerseSpecChange(e.target.value) } }
 				               	/>)
 				               	}
 				        </td>

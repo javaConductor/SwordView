@@ -5,6 +5,7 @@ import React from "react";
 //var React = require('react');
 import ReactDOM from "react-dom";
 import {HashRouter as Router, Route, Switch} from "react-router-dom";
+//import {Router, Route, Switch} from "react-router-dom";
 var createReactClass = require('create-react-class');
 
 import VerseSearch from "./components/verse-search";
